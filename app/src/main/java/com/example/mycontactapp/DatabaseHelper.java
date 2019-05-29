@@ -2,6 +2,7 @@ package com.example.mycontactapp;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -12,6 +13,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String  TABLE_NAME = "Contact2019_table";
     public static final String  ID = "ID";
     public static final String  COLUMN_NAME_CONTACT = "contact";
+
+
 
     public static final String  SQL_CREATE_ENTRIES =
             "CREATE TABLE " + TABLE_NAME + " (" +
@@ -65,4 +68,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return true;
         }
     }
+
+
+    public Cursor getAllData(){
+        Log.d("MyContactApp", "DatabaseHelper: pulling all records from db");
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery("select * from " + TABLE_NAME, null);
+        return res;
+    }
+
 }
