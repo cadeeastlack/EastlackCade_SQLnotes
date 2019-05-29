@@ -13,13 +13,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String  TABLE_NAME = "Contact2019_table";
     public static final String  ID = "ID";
     public static final String  COLUMN_NAME_CONTACT = "contact";
+    public static final String COLUMN_PHONENUMBER_CONTACT = "phonenumber";
+    public static final String COLUMN_ADDRESS_CONTACT = "address";
 
 
 
     public static final String  SQL_CREATE_ENTRIES =
             "CREATE TABLE " + TABLE_NAME + " (" +
                     ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    COLUMN_NAME_CONTACT + " TEXT)";
+                    COLUMN_NAME_CONTACT + " TEXT," +
+                    COLUMN_PHONENUMBER_CONTACT + " TEXT," +
+                    COLUMN_ADDRESS_CONTACT + " TEXT)";
 
     public static final String SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + TABLE_NAME;
@@ -51,11 +55,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public boolean insertData(String name) {
+    public boolean insertData(String name, String phonenumber, String address) {
         Log.d("MyContactApp","DatabaseHelper: inserting DatabaseHelper");
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COLUMN_NAME_CONTACT, name);
+        contentValues.put(COLUMN_PHONENUMBER_CONTACT, phonenumber);
+        contentValues.put(COLUMN_ADDRESS_CONTACT, address);
 
         long result = db.insert(TABLE_NAME,null, contentValues);
 

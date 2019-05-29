@@ -17,6 +17,8 @@ public class MainActivity extends AppCompatActivity {
 
     DatabaseHelper myDb;
     EditText editName;
+    EditText editPhoneNum;
+    EditText editAddress;
 
 
     @Override
@@ -32,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void addData(View view ){
 
-        boolean isInserted = myDb.insertData(editName.getText().toString());
+        boolean isInserted = myDb.insertData(editName.getText().toString(), editPhoneNum.getText().toString(), editAddress.getText().toString());
 
         if(isInserted == true){
             Toast.makeText(MainActivity.this,"Success - contact inserted", Toast.LENGTH_LONG).show();
@@ -62,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         showMessage("Data", buffer.toString());
     }
 
-    public void sshowMessage(String title, String message){
+    public void showMessage(String title, String message){
         //put Log.d's in here
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(true);
