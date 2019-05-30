@@ -1,5 +1,6 @@
 package com.example.mycontactapp;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -8,10 +9,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
-
-/*import android.content.Intent;
-import android.database.Cursor;
-import android.support.v7.app.AlertDialog;*/
+import android.database.sqlite.SQLiteDatabase;
+import android.support.v7.app.AlertDialog;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,9 +26,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         editName = findViewById(R.id.editText_name);
-
+        editPhoneNum = findViewById(R.id.editText_phone);
+        editAddress = findViewById(R.id.editText_address);
         myDb = new DatabaseHelper(this);
         Log.d("MyContactApp","MainActivity: instantiated DatabaseHelper");
+
     }
 
     public void addData(View view ){
@@ -58,7 +59,9 @@ public class MainActivity extends AppCompatActivity {
             //append res column 0, ... to the buffer - see StringBuffer and Cursor api's
             buffer.append("ID: " + res.getString(0) + "\n");
             buffer.append("Name: " + res.getString(1) + "\n");
-
+            buffer.append("Phone Number: " + res.getString(2) + "\n");
+            buffer.append("Address: " + res.getString(3) + "\n");
+            buffer.append("\n\n");
         }
 
         showMessage("Data", buffer.toString());
@@ -72,4 +75,7 @@ public class MainActivity extends AppCompatActivity {
         builder.setMessage(message);
         builder.show();
     }
+
+
+
 }

@@ -5,6 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.support.annotation.IntegerRes;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
@@ -13,8 +15,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String  TABLE_NAME = "Contact2019_table";
     public static final String  ID = "ID";
     public static final String  COLUMN_NAME_CONTACT = "contact";
-    public static final String COLUMN_PHONENUMBER_CONTACT = "phonenumber";
-    public static final String COLUMN_ADDRESS_CONTACT = "address";
+    public static final String  COLUMN_NAME_PHONENUMBER = "phonenumber";
+    public static final String  COLUMN_NAME_ADDRESS = "address";
 
 
 
@@ -22,8 +24,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             "CREATE TABLE " + TABLE_NAME + " (" +
                     ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                     COLUMN_NAME_CONTACT + " TEXT," +
-                    COLUMN_PHONENUMBER_CONTACT + " TEXT," +
-                    COLUMN_ADDRESS_CONTACT + " TEXT)";
+                    COLUMN_NAME_PHONENUMBER + " TEXT," +
+                    COLUMN_NAME_ADDRESS + " TEXT)";
 
     public static final String SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + TABLE_NAME;
@@ -31,7 +33,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME,null, DATABASE_VERSION);
-        //SQLiteDatabase db = this.getWritableDatabase(); //for test only - will remove later
+        SQLiteDatabase db = this.getWritableDatabase(); //for test only - will remove later
         Log.d("MyContactApp","DatabaseHelper: constructed DatabaseHelper");
 
     }
@@ -60,8 +62,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COLUMN_NAME_CONTACT, name);
-        contentValues.put(COLUMN_PHONENUMBER_CONTACT, phonenumber);
-        contentValues.put(COLUMN_ADDRESS_CONTACT, address);
+        contentValues.put(COLUMN_NAME_PHONENUMBER, phonenumber);
+        contentValues.put(COLUMN_NAME_ADDRESS, address);
 
         long result = db.insert(TABLE_NAME,null, contentValues);
 
