@@ -28,9 +28,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        editName = findViewById(R.id.editName);
-        editAddress = findViewById(R.id.editAddress);
-        editNumber = findViewById(R.id.editNumber);
+        editName = findViewById(R.id.editText_Name);
+        editAddress = findViewById(R.id.editText_Address);
+        editNumber = findViewById(R.id.editText_Number);
         myDb = new DatabaseHelper(this);
         Log.d("MyContactApp","MainActivity: instantiated DatabaseHelper");
 
@@ -83,34 +83,33 @@ public class MainActivity extends AppCompatActivity {
 
     public void SearchRecord(View view) {
 
-        Log.d("MyContactApp", "MainActivity:launching searchActivity");
-        Cursor res = myDb.getAllData();
-        Intent intent = new Intent(this, SearchActivity.class);
-
+        Log.d("MyContactApp", "MainActivity: launching search");
+        Cursor curs = myDb.getAllData();
         StringBuffer buffer = new StringBuffer();
-        int ITT = res.getCount();
-        int x  = 0;
-        while (res.moveToNext()) {
-            if (res.getString(1).equals(editName.getText().toString())) {
-                buffer.append("ID: " + res.getString(0));
-                buffer.append("\n");
-                buffer.append("Name: " + res.getString(1));
-                buffer.append("\n");
-                buffer.append("Address: " + res.getString(2));
-                buffer.append("\n");
-                buffer.append("Number: " + res.getString(3));
-                buffer.append("\n");
-            }
-            else{
-                x++;
-            }
+        //Intent intent = new Intent(this, SearchActivity.class);
+        if (editName.getText().toString().isEmpty() && editNumber.getText().toString().isEmpty() && editAddress.getText().toString().isEmpty())
+        {
+            showMessage("Error", "Nothing to search for!");
+            return;
+        }
 
+        while (curs.moveToNext())
+        {
+            if ((editName.getText().toString().isEmpty() || editName.getText().toString().equals(curs.getString(1))) && (editNumber.getText().toString().isEmpty() || editNumber.getText().toString().equals(curs.getString(2))) && (editAddress.getText().toString().isEmpty() || editAddress.getText().toString().equals(curs.getString(3))))
+            {
+                buffer.append("ID: " + curs.getString(0) + "\n" +
+                        "Name: " + curs.getString(1) + "\n" +
+                        "Phone Number: " + curs.getString(2) + "\n" +
+                        "Address: " + curs.getString(3) + "\n\n");
+            }
         }
-        if(x == ITT) {
-            buffer.append("No contact found");
+
+        if (buffer.toString().isEmpty())
+        {
+            showMessage("Error", "No matches found");
+            return;
         }
-        intent.putExtra(EXTRA_MESSAGE, buffer.toString());
-        startActivity(intent);
+        showMessage("Search results", buffer.toString());
     }
 
 }

@@ -11,14 +11,7 @@ public class SearchActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search);
-
-        //Get the intent that initiated this activity
         Intent intent = getIntent();
-        String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
 
-        //Capture the layout's textView and set the string as the text
-        TextView textView = findViewById(R.id.textView3);
-        textView.setText(message);
     }
 }
